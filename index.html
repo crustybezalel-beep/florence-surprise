@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Florence 💜</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    color:white;
+    overflow-x:hidden;
+    background:
+        radial-gradient(circle at top left,#8b2be2,transparent 35%),
+        radial-gradient(circle at bottom right,#ff4fcf,transparent 35%),
+        linear-gradient(135deg,#17002d,#32005c,#120022);
+}
+
+button{
+    font-family:inherit;
+}
+
+.screen{
+    min-height:100vh;
+    width:100%;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    position:relative;
+    overflow:hidden;
+}
+
+.screen.active{
+    display:flex;
+    animation:fadeIn .8s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(.97)}
+    to{opacity:1;transform:scale(1)}
+}
+
+/* ---------- BACKGROUND ---------- */
+
+.orb{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(5px);
+    opacity:.35;
+    pointer-events:none;
+    z-index:0;
+    animation:orbFloat 8s infinite ease-in-out alternate;
+}
+
+.orb1{
+    width:220px;
+    height:220px;
+    background:#d946ef;
+    top:-70px;
+    left:-70px;
+}
+
+.orb2{
+    width:280px;
+    height:280px;
+    background:#6366f1;
+    bottom:-100px;
+    right:-80px;
+    animation-delay:2s;
+}
+
+@keyframes orbFloat{
+    from{transform:translate(0,0)}
+    to{transform:translate(30px,40px)}
+}
+
+.sparkle{
+    position:fixed;
+    color:#fff;
+    pointer-events:none;
+    z-index:1;
+    animation:sparkleFloat linear infinite;
+}
+
+@keyframes sparkleFloat{
+    0%{
+        transform:translateY(110vh) scale(.3) rotate(0);
+        opacity:0;
+    }
+    15%{opacity:1}
+    85%{opacity:1}
+    100%{
+        transform:translateY(-10vh) scale(1.2) rotate(180deg);
+        opacity:0;
+    }
+}
+
+/* ---------- CARD ---------- */
+
+.card{
+    width:min(430px,94vw);
+    padding:35px 25px;
+    border-radius:30px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(20px);
+    box-shadow:0 25px 80px rgba(0,0,0,.35);
+    text-align:center;
+    position:relative;
+    z-index:5;
+}
+
+h1{
+    font-size:clamp(2.1rem,9vw,4rem);
+    margin-bottom:12px;
+}
+
+h2{
+    font-size:clamp(1.8rem,7vw,3rem);
+    margin-bottom:15px;
+}
+
+p{
+    line-height:1.7;
+}
+
+.subtitle{
+    opacity:.85;
+    margin-bottom:25px;
+}
+
+/* ---------- BUTTON ---------- */
+
+.btn{
+    border:none;
+    padding:14px 24px;
+    border-radius:999px;
+    color:white;
+    background:linear-gradient(135deg,#a855f7,#ec4899);
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(168,85,247,.4);
+    transition:.25s;
+}
+
+.btn:hover{
+    transform:translateY(-3px) scale(1.03);
+}
+
+.btn:active{
+    transform:scale(.96);
+}
+
+/* ---------- PASSWORD ---------- */
+
+.password{
+    width:100%;
+    padding:16px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08);
+    color:white;
+    outline:none;
+    text-align:center;
+    font-size:1.3rem;
+    letter-spacing:7px;
+    margin-bottom:18px;
+}
+
+.password::placeholder{
+    letter-spacing:2px;
+    color:rgba(255,255,255,.5);
+}
+
+.error{
+    color:#ff9bdc;
+    margin-top:15px;
+    min-height:22px;
+}
+
+/* ---------- REVEAL ---------- */
+
+.big-heart{
+    font-size:6rem;
+    animation:heartBeat 1.2s infinite;
+}
+
+@keyframes heartBeat{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.18)}
+}
+
+.glow-text{
+    text-shadow:
+        0 0 10px #fff,
+        0 0 25px #e879f9,
+        0 0 50px #c026d3;
+}
+
+/* ---------- ENVELOPE ---------- */
+
+.envelope-wrap{
+    perspective:1000px;
+}
+
+.envelope{
+    width:min(330px,85vw);
+    height:220px;
+    position:relative;
+    background:#f0abfc;
+    border-radius:8px;
+    box-shadow:0 25px 60px rgba(0,0,0,.4);
+    cursor:pointer;
+    transition:1s;
+}
+
+.envelope:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:#d946ef;
+    clip-path:polygon(0 0,50% 55%,100% 0);
+    transform-origin:top;
+    transition:1s;
+    z-index:3;
+}
+
+.envelope:after{
+    content:"💜";
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:50px;
+    z-index:4;
+}
+
+.envelope.open{
+    transform:translateY(40px);
+}
+
+.envelope.open:before{
+    transform:rotateX(180deg);
+}
+
+/* ---------- LETTER ---------- */
+
+.letter{
+    max-width:650px;
+    max-height:75vh;
+    overflow:auto;
+    text-align:left;
+    padding:35px;
+    border-radius:25px;
+    background:
+        linear-gradient(135deg,
+        rgba(255,255,255,.96),
+        rgba(250,220,255,.95));
+    color:#3b155f;
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+    line-height:1.8;
+}
+
+.letter h2{
+    text-align:center;
+    color:#8b2be2;
+}
+
+.signature{
+    margin-top:25px;
+    text-align:right;
+    font-size:1.2rem;
+    font-weight:bold;
+    color:#a21caf;
+}
+
+/* ---------- MEMORIES ---------- */
+
+.memory-container{
+    width:min(900px,95vw);
+    position:relative;
+    z-index:5;
+}
+
+.memory-box{
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(20px);
+    padding:20px;
+    border-radius:28px;
+    text-align:center;
+}
+
+.memory-content{
+    min-height:300px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:20px 0;
+}
+
+.memory-content img,
+.memory-content video{
+    max-width:100%;
+    max-height:55vh;
+    border-radius:22px;
+    object-fit:contain;
+    box-shadow:0 15px 50px rgba(0,0,0,.45);
+}
+
+.caption{
+    margin:15px 0;
+    font-size:1.1rem;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+/* ---------- CAKE ---------- */
+
+.cake-area{
+    text-align:center;
+}
+
+.cake{
+    position:relative;
+    width:220px;
+    height:180px;
+    margin:35px auto;
+}
+
+.cake-bottom{
+    position:absolute;
+    bottom:0;
+    left:20px;
+    width:180px;
+    height:75px;
+    border-radius:10px 10px 25px 25px;
+    background:linear-gradient(#c026d3,#86198f);
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+}
+
+.cake-top{
+    position:absolute;
+    bottom:65px;
+    left:35px;
+    width:150px;
+    height:65px;
+    border-radius:15px 15px 10px 10px;
+    background:linear-gradient(#f0abfc,#d946ef);
+}
+
+.cream{
+    position:absolute;
+    bottom:105px;
+    left:35px;
+    width:150px;
+    height:25px;
+    border-radius:20px;
+    background:white;
+}
+
+.candle{
+    position:absolute;
+    bottom:125px;
+    left:105px;
+    width:12px;
+    height:45px;
+    background:#fff;
+    border-radius:5px;
+}
+
+.flame{
+    position:absolute;
+    bottom:165px;
+    left:103px;
+    font-size:30px;
+    animation:flame 0.5s infinite alternate;
+}
+
+@keyframes flame{
+    from{transform:scale(1) translateY(0)}
+    to{transform:scale(1.2) translateY(-5px)}
+}
+
+/* ---------- FINAL ---------- */
+
+.final-heart{
+    font-size:7rem;
+    animation:heartBeat .9s infinite;
+}
+
+.final-message{
+    font-size:clamp(2rem,8vw,4rem);
+    font-weight:bold;
+    margin:20px 0;
+}
+
+/* ---------- MUSIC ---------- */
+
+.music-btn{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:100;
+    width:52px;
+    height:52px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(10px);
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:600px){
+    .card{
+        padding:28px 20px;
+    }
+
+    .letter{
+        padding:25px;
+    }
+
+    .memory-content{
+        min-height:240px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- Floating sparkles -->
+<div class="sparkle" style="left:8%;animation-duration:8s;">✦</div>
+<div class="sparkle" style="left:20%;animation-duration:11s;animation-delay:2s;">♡</div>
+<div class="sparkle" style="left:35%;animation-duration:9s;animation-delay:1s;">✧</div>
+<div class="sparkle" style="left:50%;animation-duration:12s;animation-delay:3s;">💜</div>
+<div class="sparkle" style="left:65%;animation-duration:10s;">✦</div>
+<div class="sparkle" style="left:80%;animation-duration:8s;animation-delay:4s;">♡</div>
+<div class="sparkle" style="left:92%;animation-duration:13s;">✧</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+    <source src="media/music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+
+<!-- ================= PASSWORD ================= -->
+
+<section id="passwordScreen" class="screen active">
+
+    <div class="card">
+
+        <div class="big-heart">💜</div>
+
+        <h1 class="glow-text">Hey Florence...</h1>
+
+        <p class="subtitle">
+            There's something waiting for you inside 👀✨
+        </p>
+
+        <input
+            id="password"
+            class="password"
+            type="password"
+            maxlength="8"
+            placeholder="Enter the secret..."
+        >
+
+        <button class="btn" onclick="checkPassword()">
+            Unlock 💜
+        </button>
+
+        <div id="error" class="error"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= REVEAL ================= -->
+
+<section id="revealScreen" class="screen">
+
+    <div class="card">
+
+        <div class="big-heart">💜</div>
+
+        <h1 class="glow-text">
+            HAPPY BIRTHDAY
+        </h1>
+
+        <h2>
+            FLORENCE 🥳💜
+        </h2>
+
+        <p class="subtitle">
+            Today is officially your day. ✨
+        </p>
+
+        <button class="btn" onclick="showScreen('envelopeScreen')">
+            I have something for you 💌
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ENVELOPE ================= -->
+
+<section id="envelopeScreen" class="screen">
+
+    <div class="card">
+
+        <h2>One little letter... 💌</h2>
+
+        <p class="subtitle">
+            Tap the envelope.
+        </p>
+
+        <div class="envelope-wrap">
+            <div
+                id="envelope"
+                class="envelope"
+                onclick="openEnvelope()">
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LETTER ================= -->
+
+<section id="letterScreen" class="screen">
+
+    <div class="letter">
+
+        <h2>Dear Florence 💜</h2>
+
+        <p>
+            Happy birthday to one of the most beautiful people
+            I've had the pleasure of knowing. 🥹
+        </p>
+
+        <p>
+            I honestly don't think a normal birthday message
+            could do justice to how special you are, so I decided
+            to make you a whole little world instead. 😂💜
+        </p>
+
+        <p>
+            I hope this new chapter brings you happiness,
+            unforgettable memories, beautiful surprises and
+            everything your heart deserves.
+        </p>
+
+        <p>
+            Keep being the amazing person you are.
+            Keep smiling. Keep dreaming. Keep being you. ✨
+        </p>
+
+        <p>
+            And whenever you look back at this day,
+            I hope this little website reminds you that
+            someone was thinking about you and wanted to make
+            your birthday a little more special. 💜
+        </p>
+
+        <p>
+            Happy birthday, Florence. 🥳🎂
+        </p>
+
+        <div class="signature">
+            — From someone who cares about you a little too much 😭💜
+        </div>
+
+        <br>
+
+        <div style="text-align:center;">
+            <button class="btn" onclick="showScreen('memoryScreen');showMemory(0);">
+                Open our memories 📸
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MEMORIES ================= -->
+
+<section id="memoryScreen" class="screen">
+
+    <div class="memory-container">
+
+        <div class="memory-box">
+
+            <h2>Our Little Memories 💜</h2>
+
+            <p>
+                Every picture. Every video. Every little moment. 🥹
+            </p>
+
+            <div id="memoryContent" class="memory-content"></div>
+
+            <div id="caption" class="caption"></div>
+
+            <div class="controls">
+
+                <button class="btn" onclick="previousMemory()">
+                    ←
+                </button>
+
+                <button class="btn" onclick="nextMemory()">
+                    Next 💜
+                </button>
+
+            </div>
+
+            <br>
+
+            <button
+                class="btn"
+                onclick="showScreen('cakeScreen')">
+                There's one more thing... 👀
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CAKE ================= -->
+
+<section id="cakeScreen" class="screen">
+
+    <div class="card cake-area">
+
+        <h2>Make a wish, Florence 🎂</h2>
+
+        <div class="cake">
+
+            <div class="flame">🔥</div>
+
+            <div class="candle"></div>
+
+            <div class="cream"></div>
+
+            <div class="cake-top"></div>
+
+            <div class="cake-bottom"></div>
+
+        </div>
+
+        <p>
+            Close your eyes... make a wish... ✨
+        </p>
+
+        <br>
+
+        <button class="btn" onclick="blowCandle()">
+            Blow the candle 🕯️
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FINAL ================= -->
+
+<section id="finalScreen" class="screen">
+
+    <div class="card">
+
+        <div class="final-heart">💜</div>
+
+        <div class="final-message glow-text">
+            I LOVE YOU, FLORENCE.
+        </div>
+
+        <p>
+            Happy birthday, beautiful. 🥹💜
+        </p>
+
+        <p style="margin-top:15px;">
+            May your smile always be brighter than these
+            fireworks. ✨
+        </p>
+
+        <br>
+
+        <button class="btn" onclick="fireworks()">
+            One last surprise 🎆
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* ================= SCREEN CONTROL ================= */
+
+function showScreen(id){
+
+    document.querySelectorAll(".screen").forEach(screen=>{
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* ================= PASSWORD ================= */
+
+function checkPassword(){
+
+    const password =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("error");
+
+    if(password === "28102009"){
+
+        error.textContent = "";
+
+        showScreen("revealScreen");
+
+        startConfetti();
+
+        playMusic();
+
+    }else{
+
+        error.textContent =
+            "Hmm... that's not it 😭 Try again 💜";
+
+    }
+}
+
+
+/* ================= ENVELOPE ================= */
+
+function openEnvelope(){
+
+    const envelope =
+        document.getElementById("envelope");
+
+    envelope.classList.add("open");
+
+    setTimeout(()=>{
+        showScreen("letterScreen");
+    },1000);
+
+}
+
+
+/* ================= MEMORIES ================= */
+
+const memories = [
+
+    {
+        type:"image",
+        src:"media/photo1.jpg",
+        caption:"One of my favourite views 💜"
+    },
+
+    {
+        type:"image",
+        src:"media/photo2.jpg",
+        caption:"Beautiful, as always ✨"
+    },
+
+    {
+        type:"video",
+        src:"media/video1.mp4",
+        caption:"A little moment worth remembering 🎬"
+    },
+
+    {
+        type:"image",
+        src:"media/photo3.jpg",
+        caption:"This one had to be here 🥹💜"
+    },
+
+    {
+        type:"video",
+        src:"media/video2.mp4",
+        caption:"Another little memory 💜"
+    },
+
+    {
+        type:"video",
+        src:"media/video3.mp4",
+        caption:"And another one... 👀"
+    },
+
+    {
+        type:"video",
+        src:"media/video4.mp4",
+        caption:"Saving these moments forever ❤️"
+    }
+
+];
+
+let currentMemory = 0;
+
+
+function showMemory(index){
+
+    currentMemory =
+        (index + memories.length) % memories.length;
+
+    const memory =
+        memories[currentMemory];
+
+    const container =
+        document.getElementById("memoryContent");
+
+    const caption =
+        document.getElementById("caption");
+
+    container.innerHTML = "";
+
+    if(memory.type === "image"){
+
+        const image =
+            document.createElement("img");
+
+        image.src = memory.src;
+
+        image.alt = "Memory";
+
+        container.appendChild(image);
+
+    }else{
+
+        const video =
+            document.createElement("video");
+
+        video.src = memory.src;
+
+        video.controls = true;
+
+        video.playsInline = true;
+
+        video.preload = "metadata";
+
+        container.appendChild(video);
+
+    }
+
+    caption.textContent =
+        memory.caption;
+
+}
+
+
+function nextMemory(){
+
+    showMemory(currentMemory + 1);
+
+}
+
+
+function previousMemory(){
+
+    showMemory(currentMemory - 1);
+
+}
+
+
+/* ================= MUSIC ================= */
+
+let musicPlaying = false;
+
+function playMusic(){
+
+    const music =
+        document.getElementById("music");
+
+    music.play()
+        .then(()=>{
+            musicPlaying = true;
+        })
+        .catch(()=>{
+            console.log("Music needs user interaction.");
+        });
+
+}
+
+
+function toggleMusic(){
+
+    const music =
+        document.getElementById("music");
+
+    if(music.paused){
+
+        music.play();
+
+        musicPlaying = true;
+
+    }else{
+
+        music.pause();
+
+        musicPlaying = false;
+
+    }
+
+}
+
+
+/* ================= CANDLE ================= */
+
+function blowCandle(){
+
+    const flame =
+        document.querySelector(".flame");
+
+    flame.style.display = "none";
+
+    startConfetti();
+
+    setTimeout(()=>{
+
+        showScreen("finalScreen");
+
+    },1200);
+
+}
+
+
+/* ================= CONFETTI ================= */
+
+function startConfetti(){
+
+    for(let i=0;i<80;i++){
+
+        const piece =
+            document.createElement("div");
+
+        piece.textContent =
+            ["💜","💖","✨","🎉","💕","⭐"][Math.floor(Math.random()*6)];
+
+        piece.style.position = "fixed";
+
+        piece.style.left =
+            Math.random()*100 + "vw";
+
+        piece.style.top = "-30px";
+
+        piece.style.fontSize =
+            (15 + Math.random()*20) + "px";
+
+        piece.style.zIndex = "9999";
+
+        piece.style.pointerEvents = "none";
+
+        document.body.appendChild(piece);
+
+        const duration =
+            2 + Math.random()*3;
+
+        piece.animate(
+
+            [
+                {
+                    transform:"translateY(0) rotate(0deg)",
+                    opacity:1
+                },
+
+                {
+                    transform:
+                    `translateY(110vh) rotate(${Math.random()*720}deg)`,
+                    opacity:0
+                }
+            ],
+
+            {
+                duration:duration*1000,
+                easing:"linear"
+            }
+
+        );
+
+        setTimeout(()=>{
+            piece.remove();
+        },duration*1000);
+
+    }
+
+}
+
+
+/* ================= FIREWORKS ================= */
+
+function fireworks(){
+
+    for(let i=0;i<120;i++){
+
+        const fire =
+            document.createElement("div");
+
+        fire.textContent =
+            Math.random() > .5 ? "✨" : "💜";
+
+        fire.style.position =
+            "fixed";
+
+        fire.style.left =
+            "50vw";
+
+        fire.style.top =
+            "50vh";
+
+        fire.style.zIndex =
+            "9999";
+
+        fire.style.fontSize =
+            "22px";
+
+        fire.style.pointerEvents =
+            "none";
+
+        document.body.appendChild(fire);
+
+        const angle =
+            Math.random()*Math.PI*2;
+
+        const distance =
+            100 + Math.random()*350;
+
+        const x =
+            Math.cos(angle)*distance;
+
+        const y =
+            Math.sin(angle)*distance;
+
+        fire.animate(
+
+            [
+                {
+                    transform:"translate(0,0) scale(1)",
+                    opacity:1
+                },
+
+                {
+                    transform:
+                    `translate(${x}px,${y}px) scale(.2)`,
+                    opacity:0
+                }
+            ],
+
+            {
+                duration:1200 + Math.random()*1000,
+                easing:"ease-out"
+            }
+
+        );
+
+        setTimeout(()=>{
+            fire.remove();
+        },2200);
+
+    }
+
+}
+
+
+/* ================= ENTER KEY ================= */
+
+document
+.getElementById("password")
+.addEventListener("keydown",function(event){
+
+    if(event.key === "Enter"){
+        checkPassword();
+    }
+
+});
+
+
+/* ================= INITIAL MEMORY ================= */
+
+showMemory(0);
+
+</script>
+
+</body>
+</html>
